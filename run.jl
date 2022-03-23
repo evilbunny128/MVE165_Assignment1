@@ -12,4 +12,11 @@ include("model.jl")
 # regular oil we can produce, how much of these (in liters) do we produce to maximize
 # profits.
 
+m, x = build_land_use_model("data.jl")
+print(m)
 
+set_optimizer(m, Gurobi.Optimizer)
+optimize!(m)
+
+println("Amount of oil: ", objective_value(m))
+println("Land for [soy, sunflower, cotton]: ", value.(x.data))

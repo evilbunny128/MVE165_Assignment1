@@ -12,11 +12,22 @@ include("model.jl")
 # regular oil we can produce, how much of these (in liters) do we produce to maximize
 # profits.
 
-m, x = build_land_use_model("data.jl")
-print(m)
+m_veg_oil, x = build_land_use_model("data.jl")
+print(m_veg_oil)
 
-set_optimizer(m, Gurobi.Optimizer)
-optimize!(m)
+set_optimizer(m_veg_oil, Gurobi.Optimizer)
+optimize!(m_veg_oil)
 
-println("Amount of oil: ", objective_value(m))
+println("Amount of oil: ", objective_value(m_veg_oil))
 println("Land for [soy, sunflower, cotton]: ", value.(x.data))
+
+m_profit, b = build_profit_model("data.jl")
+print(m_profit)
+
+set_optimizer(m_profit, Gurobi.Optimizer)
+optimize!(m_profit)
+
+println("Amount of profit: ", objective_value(m_profit))
+println("Fuel of each mixture [b5, b30, b100]: ", value.(b.data))
+
+

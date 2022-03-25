@@ -21,7 +21,7 @@ optimize!(m_veg_oil)
 println("Amount of oil: ", objective_value(m_veg_oil))
 println("Land for [soy, sunflower, cotton]: ", value.(x.data))
 
-m_profit, b = build_profit_model("data.jl")
+m_profit, b = build_profit_model("data.jl", objective_value(m_veg_oil))
 print(m_profit)
 
 set_optimizer(m_profit, Gurobi.Optimizer)

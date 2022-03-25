@@ -17,7 +17,7 @@ Resource_use = [1 1 1; Litres_water_per_Ha]
 I_fuel_mixtures = 1:3
 J_fuel_mixtures = 1:3
 
-Max_amount_vegetable_oil = 685_655 # Found by running the part of the program that
+# Max_amount_vegetable_oil = 685_655 # Found by running the part of the program that
 # optimizes the amount of vegetable oil produced.
 
 Max_amount_petrodisel = 150_000

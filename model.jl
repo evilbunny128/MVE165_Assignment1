@@ -8,7 +8,7 @@ function build_land_use_model(data_file::String)
     return m, x, Resource_constraint
 end
 
-function build_profit_model(data_file::String)
+function build_profit_model(data_file::String, Max_amount_vegetable_oil)
     include(data_file)
     m = Model()
     @variable(m, b[I_fuel_mixtures] >= 0) # Amount produced of each kind of fuel.

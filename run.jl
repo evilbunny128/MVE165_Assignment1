@@ -48,6 +48,11 @@ profit_list = zeros(length(t_range), 3)
 profit_list[:, 1] = get_mix_distribution.([[t, 0.05, 0] for t in t_range])
 profit_list[:, 2] = get_mix_distribution.([[0.2, t, 0] for t in t_range])
 profit_list[:, 3] = get_mix_distribution.([[0.2, 0.05, t] for t in t_range])
-plt = plot(t_range, profit_list, label=["B5 tax" "B30 tax" "B100 tax"])
+
+plt = plot(t_range .* 100, profit_list, 
+    label=["B5 tax" "B30 tax" "B100 tax"], 
+    dpi=300,
+    xlabel="Taxes %",
+    ylabel="Profit €")
 savefig(plt, "profit-tax-all-else-equal.png")
 

@@ -9,8 +9,17 @@ function build_land_use_model(data_file::String)
     return m, x, Resource_constraint
 end
 
-function build_profit_model(data_file::String, Max_amount_vegetable_oil)
+function build_profit_model(data_file::String, Max_amount_vegetable_oil, taxes)
     include(data_file)
+    
+    taxes = 1 .- taxes
+
+    Profit_b5 = 1.43 * taxes[1] - 1 * 0.95 - 0.05 * 0.2 / 0.9 * 1.5 # sale after tax -
+    Profit_b30 = 1.29 * taxes[2] - 1 * 0.7 - 0.3 * 0.2 / 0.9 * 1.5 # - petrodisel cost -
+    Profit_b100 = 1.16 * taxes[3] - 0.2 / 0.9 * 1.5 # - methanol cost per litre
+    
+    Profit_fuel_mixtures = [Profit_b5 Profit_b30 Profit_b100]
+
     m = Model()
     @variable(m, b[I_fuel_mixtures] >= 0) # Amount produced of each kind of fuel.
     @constraint(m, MinProduced, sum(b) >= Min_fuel_produced)

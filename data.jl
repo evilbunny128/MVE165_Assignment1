@@ -22,12 +22,6 @@ J_fuel_mixtures = 1:3
 
 Max_amount_petrodisel = 150_000
 
-Profit_b5 = 1.43 * 0.8 - 1 * 0.95 - 0.05 * 0.2 / 0.9 * 1.5 # sale after tax -
-Profit_b30 = 1.29 * 0.95 - 1 * 0.7 - 0.3 * 0.2 / 0.9 * 1.5 # - petrodisel cost -
-Profit_b100 = 1.16 * 1 - 0.2 / 0.9 * 1.5 # - methanol cost per litre
-
-Profit_fuel_mixtures = [Profit_b5 Profit_b30 Profit_b100]
-
 Petro_disel_used = [0.95 0.7 0]
 Veg_oil_used = [0.05 0.3 1] ./ 0.9
 

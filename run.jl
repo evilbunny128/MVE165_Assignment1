@@ -1,6 +1,7 @@
 using JuMP
 using MathOptInterface
 using Gurobi
+using Plots
 
 include("model.jl")
 
@@ -21,7 +22,9 @@ optimize!(m_veg_oil)
 println("Amount of oil: ", objective_value(m_veg_oil))
 println("Land for [soy, sunflower, cotton]: ", value.(x.data))
 
-m_profit, b = build_profit_model("data.jl", objective_value(m_veg_oil))
+taxes = [0.2, 0.05, 0]
+
+m_profit, b = build_profit_model("data.jl", objective_value(m_veg_oil), taxes)
 print(m_profit)
 
 set_optimizer(m_profit, Gurobi.Optimizer)
@@ -30,4 +33,21 @@ optimize!(m_profit)
 println("Amount of profit: ", objective_value(m_profit))
 println("Fuel of each mixture [b5, b30, b100]: ", value.(b.data))
 
+function get_mix_distribution(taxes)
+    m_profit, b = build_profit_model("data.jl", objective_value(m_veg_oil), taxes)
+    set_optimizer(m_profit, Gurobi.Optimizer)
+    optimize!(m_profit)
+
+    return objective_value(m_profit)
+end
+
+t_range = 0:0.01:0.2
+
+profit_list = zeros(length(t_range), 3)
+
+profit_list[:, 1] = get_mix_distribution.([[t, 0.05, 0] for t in t_range])
+profit_list[:, 2] = get_mix_distribution.([[0.2, t, 0] for t in t_range])
+profit_list[:, 3] = get_mix_distribution.([[0.2, 0.05, t] for t in t_range])
+plt = plot(t_range, profit_list, label=["B5 tax" "B30 tax" "B100 tax"])
+savefig(plt, "profit-tax-all-else-equal.png")
 

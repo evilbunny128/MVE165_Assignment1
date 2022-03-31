@@ -1,5 +1,8 @@
 
-function build_land_use_model(data_file::String)
+function build_land_use_model(data_file::String, water=Litres_water_per_Ha)
+    Resource_use = [1 1 1; water]
+
+
     include(data_file)
     m = Model()
     @variable(m, x[I_land_use] >= 0) # amount of land used for each crop.

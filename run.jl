@@ -34,6 +34,8 @@ optimize!(m_profit)
 println("Amount of profit: ", objective_value(m_profit))
 println("Fuel of each mixture [b5, b30, b100]: ", value.(b.data))
 
+println("\n----------------------------------------------------------------\n")
+
 function get_mix_distribution_fuels(taxes)
     m_profit, b = build_profit_model("data.jl", objective_value(m_veg_oil), taxes)
     set_optimizer(m_profit, Gurobi.Optimizer)
@@ -42,7 +44,7 @@ function get_mix_distribution_fuels(taxes)
     return objective_value(m_profit)
 end
 
-tax_range = 0:0.01:0.2
+tax_range = 0:0.01:1
 
 profit_list = zeros(length(tax_range), 3)
 
